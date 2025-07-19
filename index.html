@@ -1,308 +1,4 @@
-
-                        <!DOCTYPE html>
-                        <html lang="en">
-                        <head>
-                            <meta charset="UTF-8">
-                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-							<style>
-								body {
-									background-color: white; /* Ensure the iframe has a white background */
-								}
-
-								
-        /* 禁止文本选择 */
-        * {
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-            cursor: default;
-        }
-        input, button, textarea, [contenteditable] {
-            -webkit-user-select: text;
-            -moz-user-select: text;
-            -ms-user-select: text;
-            user-select: text;
-            cursor: text;
-        }
-        :root {
-            /* 浅色模式 */
-            --text-primary: #2d3748;
-            --text-secondary: #4a5568;
-            --bg-primary: #f8fafc;
-            --bg-secondary: #edf2f7;
-            --accent-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            --card-bg: rgba(255, 255, 255, 0.9);
-            --shadow-color: rgba(0, 0, 0, 0.08);
-            --hover-brightness: 1.05;
-            --card-border: rgba(255, 255, 255, 0.5);
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* 深色模式 */
-                --text-primary: #f0f4f8;
-                --text-secondary: #cbd5e0;
-                --bg-primary: #1a202c;
-                --bg-secondary: #2d3748;
-                --accent-gradient: linear-gradient(135deg, #9f7aea 0%, #4c51bf 100%);
-                --card-bg: rgba(26, 32, 44, 0.9);
-                --shadow-color: rgba(0, 0, 0, 0.3);
-                --hover-brightness: 1.15;
-                --card-border: rgba(0, 0, 0, 0.2);
-            }
-        }
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--text-primary);
-            background: var(--bg-primary);
-            min-height: 100vh;
-            padding: 2rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background-image: 
-                radial-gradient(circle at 10% 20%, rgba(101, 126, 234, 0.15) 0%, transparent 20%),
-                radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 20%);
-            background-attachment: fixed;
-        }
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            animation: fadeIn 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(1rem); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        header {
-            text-align: center;
-            margin: 3rem 0;
-        }
-        .emoji-wrapper {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            animation: float 6s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-        h1 {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.03em;
-        }
-        .tagline {
-            font-size: 1.2rem;
-            color: var(--text-secondary);
-            margin-bottom: 2rem;
-            font-weight: 400;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        .search-container {
-            width: 100%;
-            max-width: 600px;
-            margin: 3.5rem auto;
-            position: relative;
-        }
-        #search-box {
-            width: 100%;
-            padding: 1.1rem 1.5rem;
-            font-size: 1.1rem;
-            border: none;
-            border-radius: 99px;
-            background: var(--card-bg);
-            color: var(--text-primary);
-            box-shadow: 0 4px 20px var(--shadow-color);
-            border: 1px solid var(--card-border);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-        #search-box:focus {
-            outline: none;
-            box-shadow: 0 8px 32px rgba(101, 126, 234, 0.2);
-            transform: scale(1.02);
-        }
-        .search-btn {
-            position: absolute;
-            right: 0.3rem;
-            top: 0.3rem;
-            bottom: 0.3rem;
-            padding: 0 1.5rem;
-            background: var(--accent-gradient);
-            color: white;
-            border: none;
-            border-radius: 99px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            box-shadow: 0 2px 10px rgba(101, 126, 234, 0.3);
-        }
-        /* 卡片容器网格布局 */
-        .content-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 1.5rem;
-            margin: 3rem 0;
-            perspective: 1500px;
-        }
-        /* 卡片样式 */
-        .card {
-            background: var(--card-bg);
-            border-radius: 1.2rem;
-            padding: 2rem;
-            box-shadow: 0 10px 25px var(--shadow-color);
-            border: 1px solid var(--card-border);
-            transform-style: preserve-3d;
-            transform: translateZ(0);
-            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            position: relative;
-            overflow: hidden;
-            opacity: 0;
-            animation: cardEntrance 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-            display: flex;
-            flex-direction: column;
-        }
-        /* 卡片进入动画 */
-        @keyframes cardEntrance {
-            0% {
-                opacity: 0;
-                transform: translateY(50px) rotateX(-30deg) scale(0.9);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0) rotateX(0) scale(1);
-            }
-        }
-        /* 卡片延迟进入 (更新至6个卡片) */
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        /* 卡片悬停效果 */
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: var(--accent-gradient);
-            opacity: 0;
-            z-index: -1;
-            transition: opacity 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-            border-radius: inherit;
-        }
-        .card:hover {
-            transform: translateY(-8px) scale(1.02) rotateX(5deg);
-            box-shadow: 0 15px 35px rgba(101, 126, 234, 0.3);
-        }
-        .card:hover::before {
-            opacity: 0.1;
-        }
-        .card h2 {
-            font-size: 1.5rem;
-            margin-bottom: 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-        .card p {
-            color: var(--text-secondary);
-            margin-bottom: 1.5rem;
-            line-height: 1.7;
-            transition: color 0.3s ease;
-            flex-grow: 1;
-        }
-        .card:hover p {
-            color: var(--text-primary);
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.7rem 1.4rem;
-            background: var(--accent-gradient);
-            color: white;
-            text-decoration: none;
-            border-radius: 99px;
-            font-weight: 500;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            box-shadow: 0 2px 6px rgba(101, 126, 234, 0.3);
-            position: relative;
-            overflow: hidden;
-            
-            /* --- 改动点: 让按钮恢复自身宽度，不再拉伸 --- */
-            align-self: flex-start;
-        }
-        .btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(101, 126, 234, 0.4);
-        }
-        .btn:hover::before {
-            opacity: 0.1;
-        }
-        /* 响应式设计 */
-        @media (max-width: 768px) {
-            body {
-                padding: 1.5rem;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .emoji-wrapper {
-                font-size: 3.5rem;
-            }
-            
-            .card {
-                animation: cardEntranceMobile 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
-            }
-            
-            @keyframes cardEntranceMobile {
-                0% {
-                    opacity: 0;
-                    transform: translateY(30px) scale(0.95);
-                }
-                100% {
-                    opacity: 1;
-                    transform: translateY(0) scale(1);
-                }
-            }
-        }
-
-
-							</style>
-                        </head>
-                        <body>
-                            <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
@@ -366,7 +62,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: 
+            background-image:
                 radial-gradient(circle at 10% 20%, rgba(101, 126, 234, 0.15) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 20%);
             background-attachment: fixed;
@@ -546,7 +242,6 @@
             box-shadow: 0 2px 6px rgba(101, 126, 234, 0.3);
             position: relative;
             overflow: hidden;
-            
             /* --- 改动点: 让按钮恢复自身宽度，不再拉伸 --- */
             align-self: flex-start;
         }
@@ -573,19 +268,15 @@
             body {
                 padding: 1.5rem;
             }
-            
             h1 {
                 font-size: 2.2rem;
             }
-            
             .emoji-wrapper {
                 font-size: 3.5rem;
             }
-            
             .card {
                 animation: cardEntranceMobile 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
             }
-            
             @keyframes cardEntranceMobile {
                 0% {
                     opacity: 0;
@@ -613,36 +304,36 @@
         <div class="content-section">
             <div class="card">
                 <h2>👋 关于我</h2>
-                <p>一名热爱技术的创作者，热衷于部署和开发一些没什么技术含量，但是好玩、实用的项目，所有项目对所有人免费开放！😏</p>
+                <p>你好，我是一名热爱技术的创造者，热衷于将有趣的想法变成好玩、实用的项目。我坚信技术应当带来乐趣，所以这里的一切都对所有人免费开放！😏 </p>
                 <a href="https://github.com/2erTwo6" class="btn" target="_blank" rel="noopener noreferrer">GITHUB →</a>
             </div>
             <div class="card">
                 <h2>💻 和大模型对话</h2>
-                <p>基于Open WebUI项目架设的大模型对话网站！您可在此免费、无限制地使用Gemini、Grok、Deepseek等大模型，告别服务器繁忙😎</p>
+                <p>在这里，你可以免费、无限制地使用 Gemini、Grok 等顶级大模型。我们还支持强大的函数工具调用，让你彻底告别“服务器繁忙”的烦恼，体验与 AI 自由对话的乐趣~😎</p>
                 <a href="http://llm.泥嚎.top" class="btn" target="_blank" rel="noopener noreferrer">点我体验 →</a>
             </div>
             <div class="card">
                 <h2>📝 我的个人博客</h2>
-                <p>这里记录了我对技术、生活和各种有趣事物的思考与分享。欢迎访问，一起探索更多精彩内容！📚</p>
+                <p>欢迎来到我的个人试验田与创造力游乐场。我坚信技术是一种充满乐趣的表达，会在这里分享我的技术探索心得、项目开发经历以及对生活的一些思考~📚</p>
                 <a href="http://blog.泥嚎.top" class="btn" target="_blank" rel="noopener noreferrer">访问博客 →</a>
             </div>
             <!-- 新增卡片：白噪音网站 -->
             <div class="card">
                 <h2>🎧 白噪音网站</h2>
-                <p>在这里用户可以自由搭配不同的白噪音，帮助营造专注与放松的环境。</p>
+                <p>超过75种白噪音任你自由搭配，创造属于你的沉浸式氛围。网站内置了番茄钟和睡眠定时器等实用功能，是你专注工作、放松身心、改善睡眠的理想站点！💤</p>
                 <a href="https://wn.xn--p8rt33c.top/" class="btn" target="_blank" rel="noopener noreferrer">立即体验 →</a>
             </div>
             <!-- 新增卡片：泰拉瑞亚地图查看器 -->
             <div class="card">
-                <h2>🗺️ 泰拉瑞亚地图查看器</h2>
-                <p>只要导入你的存档文件，就会解析出你的存档地图全貌，并且内置筛选工具，可用于查找并高亮显示地图中的方块、物品的位置等。</p>
+                <h2>🗺️ Terraria地图查看器</h2>
+                <p>想知道你的泰拉瑞亚世界里藏着什么秘密吗？只需上传存档，就能解锁完整的世界地图。强大的筛选功能帮你瞬间定位稀有矿石和宝箱，让你的寻宝之旅不再盲目！🗺️</p>
                 <a href="https://tr.xn--p8rt33c.top/" class="btn" target="_blank" rel="noopener noreferrer">立即查看 →</a>
             </div>
-            <!-- 只保留一个“有待开发”的卡片 -->
+            <!-- 修改后的卡片：文件快递柜 -->
             <div class="card">
-                <h2>🚧 有待开发</h2>
-                <p>这个项目正在构思或开发中，敬请期待！</p>
-                <a href="#" class="btn">敬请期待 →</a>
+                <h2>📁 文件快递柜</h2>
+                <p>一个匿名的文件快递柜，通过口令分享文件或文本，无需注册。单文件最高支持3GB，18天有效。虽然带宽不大，但用来分享资料和临时文件，绝对比聊天工具更方便！📄</p>
+                <a href="https://wp.xn--p8rt33c.top/" class="btn" target="_blank" rel="noopener noreferrer">立即使用 →</a>
             </div>
         </div>
     </div>
@@ -669,47 +360,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const correctTitle = "泥嚎";
             if(document.title !== correctTitle) {
-                document.title = correctTitle; 
+                document.title = correctTitle;
                 console.log("已自动修正页面标题为:", correctTitle);
             }
         });
     </script>
 </body>
 </html>
-
-
-
-							<script>
-                            	
-        function performSearch() {
-            const query = document.getElementById('search-box').value.trim();
-            if (query) {
-                // 修改为您的SearXNG域名
-                window.open(`http://sear.泥嚎.top/search?q=${encodeURIComponent(query)}`, '_blank');
-            }
-        }
-        document.getElementById('search-box').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                performSearch();
-            }
-        });
-        // 防止双击选中文本
-        document.addEventListener('mousedown', function(e) {
-            if (e.detail > 1) {
-                e.preventDefault();
-            }
-        });
-        // 确保页面标题正确
-        document.addEventListener('DOMContentLoaded', function() {
-            const correctTitle = "泥嚎";
-            if(document.title !== correctTitle) {
-                document.title = correctTitle; 
-                console.log("已自动修正页面标题为:", correctTitle);
-            }
-        });
-    
-
-							</script>
-                        </body>
-                        </html>
-                    
